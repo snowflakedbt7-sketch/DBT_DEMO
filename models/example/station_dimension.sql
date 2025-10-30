@@ -1,15 +1,19 @@
-with cte as(
-    select
-    distinct
-    START_STATIO_ID as START_STATION_ID ,
-    START_STATION_NAME,
-    
-    START_LAT,
-    START_LNG
+WITH BIKE as (
 
-    from {{ source('demo', 'bike') }}
-    where RIDE_ID!='ride_id'
-    limit 10
+select
+distinct
+START_STATIO_ID AS station_id,
+start_station_name as station_name,
+START_LAT as station_lat,
+START_LNG as start_station_lng
+
+from {{ ref('stg_bike') }}
+
+where RIDE_ID != '"bikeid"'
+
 
 )
-select* from cte
+
+select
+*
+from BIKE
